@@ -8,12 +8,12 @@ def main() -> None:
     try:
         card_1 = CreatureCard("Fire Dragon", 5, "Legendary", 7, 5)
     except Exception as e:
-        print(f"Error: {e}")
+        print(e)
         card_1 = None
     try:
         card_2 = CreatureCard("Goblin Warrior", 2, "Common", 2, 1)
     except Exception as e:
-        print(f"Error: {e}")
+        print(e)
         card_2 = None
     game_state = {"mana": 6, "battlefield": {}}
 
@@ -28,7 +28,7 @@ def main() -> None:
             print(f"Playable: {card_1.is_playable(game_state['mana'])}")
             print(f"Play result: {card_1.play(game_state)}\n")
         except Exception as e:
-            print(f"Error: {e}")
+            print(e)
 
         if card_2:
             print(f"{card_1.name} attacks {card_2.name}:")
@@ -39,7 +39,7 @@ def main() -> None:
             print(f"Testing insufficient mana ({game_state['mana']} available):")
             print(f"Playable: {card_1.is_playable(game_state['mana'])}\n")
         except Exception as e:
-            print(f"Error: {e}")
+            print(e)
 
     print("Abstract pattern successfully demonstrated!")
 
