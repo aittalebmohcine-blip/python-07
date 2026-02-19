@@ -20,17 +20,7 @@
 
 from ex2.EliteCard import EliteCard
 from ex0.CreatureCard import CreatureCard
-
-
-class Test:
-    pass
-
-
-class Test_2(Test):
-    pass
-
-
-obj1 = Test_2()
+# from ex1.SpellCard import SpellCard
 
 
 def main() -> None:
@@ -47,25 +37,30 @@ def main() -> None:
         ]
         print(f"- {parent.__name__}: {methods}")
 
-    print("\nPlaying Arcane Warrior (Elite Card):")
-
     try:
-        warrior = EliteCard("Arcane Warrior", 2, "rar", 5)
+        warrior = EliteCard("Arcane Warrior", 2, "rar", 5, 3, 1)
     except Exception as e:
         warrior = None
         print(e)
     try:
-        target = CreatureCard("Enemy", 9, "rar", 1, 1)
+        enemy = CreatureCard("Enemy", 9, "rar", 2, 1)
     except Exception as e:
-        target = None
+        enemy = None
         print(e)
-    if target and warrior:
+
+    if warrior and enemy:
+        print(f"\nPlaying {warrior.name} ({warrior.type} Card):")
         try:
-            print(f"Attack result: {warrior.attack(target)}")
+            print(f"\nAttack result: {warrior.attack(enemy)}")
+            print(f"Defense result: {warrior.defend(enemy.attack)}")
         except Exception as e:
             print(e)
 
-    print(f"Defense result: {warrior.defend()}")
+    print("\nMagic phase:")
+    print(f"Spell cast: {warrior.cast_spell('Fireball', ['Enemy1', 'Enemy2'])}")
+    print(f"Mana channel: {warrior.channel_mana(3)}")
+
+    print("\nMultiple interface implementation successful!")
 
 
 if __name__ == "__main__":
