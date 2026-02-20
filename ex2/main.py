@@ -1,26 +1,5 @@
-#   === DataDeck Ability System ===
-#
-#   EliteCard capabilities:
-#   - Card: ['play', 'get_card_info', 'is_playable']
-#   - Combatable: ['attack', 'defend', 'get_combat_stats']
-#   - Magical: ['cast_spell', 'channel_mana', 'get_magic_stats']
-#
-#   Playing Arcane Warrior (Elite Card):
-#
-#   Combat phase:
-#   Attack result: {'attacker': 'Arcane Warrior', 'target': 'Enemy', 'damage': 5, 'combat_type': 'melee'}
-#   Defense result: {'defender': 'Arcane Warrior', 'damage_taken': 2, 'damage_blocked': 3, 'still_alive': True}
-#
-#   Magic phase:
-#   Spell cast: {'caster': 'Arcane Warrior', 'spell': 'Fireball', 'targets': ['Enemy1', 'Enemy2'], 'mana_used': 4}
-#   Mana channel: {'channeled': 3, 'total_mana': 7}
-#
-#   Multiple interface implementation successful!
-
-
 from ex2.EliteCard import EliteCard
 from ex0.CreatureCard import CreatureCard
-# from ex1.SpellCard import SpellCard
 
 
 def main() -> None:
@@ -48,17 +27,19 @@ def main() -> None:
         enemy = None
         print(e)
 
-    if warrior and enemy:
+    if warrior:
         print(f"\nPlaying {warrior.name} ({warrior.type} Card):")
         try:
-            print(f"\nAttack result: {warrior.attack(enemy)}")
-            print(f"Defense result: {warrior.defend(enemy.attack)}")
+            if enemy:
+                print("\nCombat phase:")
+                print(f"Attack result: {warrior.attack(enemy)}")
+                print(f"Defense result: {warrior.defend(enemy.attack)}")
+
+            print("\nMagic phase:")
+            print(f"Spell cast: {warrior.cast_spell('Fireball', ['Enemy1', 'Enemy2'])}")
+            print(f"Mana channel: {warrior.channel_mana(3)}")
         except Exception as e:
             print(e)
-
-    print("\nMagic phase:")
-    print(f"Spell cast: {warrior.cast_spell('Fireball', ['Enemy1', 'Enemy2'])}")
-    print(f"Mana channel: {warrior.channel_mana(3)}")
 
     print("\nMultiple interface implementation successful!")
 
