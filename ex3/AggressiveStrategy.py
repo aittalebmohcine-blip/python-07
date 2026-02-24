@@ -12,7 +12,36 @@ class AggressiveStrategy(GameStrategy):
         self.name = name
 
     def execute_turn(self, hand: list, battlefield: list) -> dict:
-        pass
+        if not isinstance(hand, list) or not isinstance(battlefield, list):
+            raise TypeError(
+                "[LOGIC ERROR]: The hand and battlefield arguments must be lists"
+            )
+
+        cards_played = []
+        mana_used = 0
+
+        # play low-cost creatures (cost <= 3)
+        #################################
+        for card in hand:
+            if hasattr(card, "cost"):
+                battlefield.append(card)
+                # hand.remove(card)
+                cards_played.append(card)
+                mana_used += card.cost
+
+        # attack with all creatures on battlefield
+        damage_dealt = 0
+        for card in battlefield:
+            if hasattr(card, "type") and card.type == "Creature":
+                if hasattr(card, "attack"):
+                    damage_dealt += card.attack
+
+        return {
+            "cards_played": [card.name for card in cards_played],
+            "mana_used": mana_used,
+            "targets_attacked": ["Enemy Player"],
+            "damage_dealt": damage_dealt,
+        }
 
     def get_strategy_name(self) -> str:
         return self.name
@@ -20,7 +49,7 @@ class AggressiveStrategy(GameStrategy):
     def prioritize_targets(self, available_targets: list) -> list:
         if not isinstance(available_targets, list):
             raise TypeError(
-                "LOGIC ERROR: The available_targets argument must be a list"
+                "[LOGIC ERROR]: The available_targets argument must be a list"
             )
 
         with_health = [

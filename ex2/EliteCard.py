@@ -88,7 +88,11 @@ class EliteCard(Card, Combatable, Magical):
         }
 
     def get_combat_stats(self) -> dict:
-        pass
+        return {
+            "name": self.name,
+            "attack": self.damage,
+            "health": self.health,
+        }
 
     # from Magical
     def cast_spell(self, spell_name: str, targets: list) -> dict:
@@ -115,4 +119,8 @@ class EliteCard(Card, Combatable, Magical):
         return {"channeled": amount, "total_mana": 7}
 
     def get_magic_stats(self) -> dict:
-        pass
+        return {
+            "name": self.name,
+            "damage_blocked": self.damage_blocked,
+            "health": self.health,
+        }
