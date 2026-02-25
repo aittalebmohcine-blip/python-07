@@ -17,7 +17,6 @@ class TournamentPlatform:
         winner = card1_id if card1.rating > card2.rating else card2_id
         loser = card2_id if winner == card1_id else card1_id
 
-        # Update wins/losses
         self.cards[winner].update_wins(1)
         self.cards[loser].update_losses(1)
 
@@ -28,11 +27,13 @@ class TournamentPlatform:
             "loser_rating": self.cards[loser].calculate_rating(),
         }
 
-    def get_leaderboard(self) -> list:
+    def get_leaderboard(self) -> list[dict]:
         def rating_key(card: TournamentCard) -> int:
             return card.calculate_rating()
 
-        sorted_cards = sorted(list(self.cards.values()), key=rating_key, reverse=True)
+        sorted_cards = sorted(
+            list(self.cards.values()), key=rating_key, reverse=True
+        )
 
         return [
             {
@@ -45,9 +46,13 @@ class TournamentPlatform:
 
     def generate_tournament_report(self) -> dict:
         total_cards = len(self.cards)
-        total_matches = sum(c.wins + c.losses for c in self.cards.values()) // 2
+        total_matches = sum(
+            c.wins + c.losses for c in self.cards.values()
+            ) // 2
         avg_rating = (
-            sum(c.calculate_rating() for c in self.cards.values()) / total_cards
+            sum(
+                c.calculate_rating() for c in self.cards.values()
+                ) / total_cards
             if total_cards > 0
             else 0
         )

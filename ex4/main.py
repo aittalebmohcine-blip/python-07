@@ -16,24 +16,23 @@ def main() -> None:
         for card in cards:
             print(f"\n{cards[card].name} (ID: {card}):")
             print(
-                f"- Interfaces: {[c.__name__ for c in dragon_001.__class__.__bases__]}"
+                "- Interfaces: "
+                f"{[c.__name__ for c in dragon_001.__class__.__bases__]}"
             )
             print(f"- Rating: {cards[card].rating}")
-            print(f"- Record: {cards[card].wins}-{cards[card].losses})")
+            print(f"- Record: {cards[card].wins}-{cards[card].losses}")
 
         print("\nCreating tournament match...")
         result = platform.create_match("dragon_1", "wizard_2")
         print(f"Match result: {result}")
 
         print("\nTournament Leaderboard:")
-        i = 1
-        for card in cards:
+        for i, card in enumerate(cards, start=1):
             name = cards[card].name
             rating = cards[card].rating
             wins = cards[card].wins
             losses = cards[card].losses
             print(f"{i}. {name} - Rating: {rating} ({wins}-{losses})")
-            i += 1
 
         print("\nPlatform Report:")
         print(platform.generate_tournament_report())

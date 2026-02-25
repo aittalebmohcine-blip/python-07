@@ -5,7 +5,6 @@ from ex0.CreatureCard import CreatureCard
 
 
 def main() -> None:
-
     print("\n=== DataDeck Deck Builder ===\n")
 
     game_state = {"mana": 60, "battlefield": {}}
@@ -17,7 +16,13 @@ def main() -> None:
             ("Fire Dragon", 5, "Legendary", 7, 5),
         ],
         "artifact_cards": [
-            ("Mana Crystal", 2, "Common", 5, "Permanent: +1 mana per turn"),
+            (
+                "Mana Crystal",
+                2,
+                "Common",
+                5,
+                "Permanent: +1 mana per turn",
+            ),
         ],
         "spell_cards": [
             ("Lightning Bolt", 3, "Common", "damage"),
@@ -30,29 +35,54 @@ def main() -> None:
                 for card_data in data[key]:
                     try:
                         name, cost, rarity, attack, health = card_data
-                        card = CreatureCard(name, cost, rarity, attack, health)
+                        card = CreatureCard(
+                            name,
+                            cost,
+                            rarity,
+                            attack,
+                            health,
+                        )
                         deck.add_card(card)
                     except Exception as e:
                         print(e)
             except TypeError as e:
                 print(e)
+
         if key == "artifact_cards":
             try:
                 for card_data in data[key]:
                     try:
-                        name, cost, rarity, durability, effect = card_data
-                        card = ArtifactCard(name, cost, rarity, durability, effect)
+                        (
+                            name,
+                            cost,
+                            rarity,
+                            durability,
+                            effect,
+                        ) = card_data
+                        card = ArtifactCard(
+                            name,
+                            cost,
+                            rarity,
+                            durability,
+                            effect,
+                        )
                         deck.add_card(card)
                     except Exception as e:
                         print(e)
             except TypeError as e:
                 print(e)
+
         if key == "spell_cards":
             try:
                 for card_data in data[key]:
                     try:
                         name, cost, rarity, effect_type = card_data
-                        card = SpellCard(name, cost, rarity, effect_type)
+                        card = SpellCard(
+                            name,
+                            cost,
+                            rarity,
+                            effect_type,
+                        )
                         deck.add_card(card)
                     except Exception as e:
                         print(e)
@@ -65,8 +95,7 @@ def main() -> None:
     print("\nDrawing and playing cards:")
 
     count = stats["total_cards"]
-    for i in range(count):
-        # protection needed
+    for _ in range(count):
         try:
             drew = deck.draw_card()
             print(f"\nDrew: {drew.name} ({drew.type})")
@@ -74,7 +103,10 @@ def main() -> None:
         except Exception as e:
             print(e)
 
-    print("\nPolymorphism in action: Same interface, different card behaviors!")
+    print(
+        "\nPolymorphism in action: "
+        "Same interface, different card behaviors!"
+    )
 
 
 if __name__ == "__main__":

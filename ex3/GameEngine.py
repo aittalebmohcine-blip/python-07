@@ -2,7 +2,6 @@ from ex3.GameStrategy import GameStrategy
 from ex3.CardFactory import CardFactory
 
 
-# GameEngine (Game Orchestrator)
 class GameEngine:
     def __init__(self):
         self.factory = None
@@ -13,14 +12,18 @@ class GameEngine:
         self.hand = []
         self.battlefield = []
 
-    def configure_engine(self, factory: CardFactory, strategy: GameStrategy) -> None:
+    def configure_engine(
+        self, factory: CardFactory, strategy: GameStrategy
+    ) -> None:
         if not isinstance(factory, CardFactory):
             raise TypeError(
-                "[LOGIC ERROR]: The factory argument must be a CardFactory instance"
+                "[LOGIC ERROR]: The factory argument "
+                "must be a CardFactory instance"
             )
         if not isinstance(strategy, GameStrategy):
             raise TypeError(
-                "[LOGIC ERROR]: The strategy argument must be a GameStrategy instance"
+                "[LOGIC ERROR]: The strategy argument "
+                "must be a GameStrategy instance"
             )
         self.factory = factory
         self.strategy = strategy
@@ -33,7 +36,8 @@ class GameEngine:
     def simulate_turn(self) -> dict:
         if self.factory is None or self.strategy is None:
             raise ValueError(
-                "[LOGIC ERROR]: Can't simulate turn. game engine is not configured (missing factory or strategy.)"
+                "[LOGIC ERROR]: Can't simulate turn. "
+                "Game engine is not configured (missing factory or strategy)."
             )
         self.hand = [
             self.factory.create_creature(),
@@ -43,7 +47,7 @@ class GameEngine:
         self.cards_created += 3
         result = self.strategy.execute_turn(self.hand, self.battlefield)
         self.turns_simulated += 1
-        self.total_damage += result["damage_dealt"]
+        self.total_damage += result.get("damage_dealt", 0)
         return result
 
     def get_engine_status(self) -> dict:

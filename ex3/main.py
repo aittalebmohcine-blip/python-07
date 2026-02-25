@@ -1,7 +1,3 @@
-from ex0.CreatureCard import CreatureCard
-
-from ex1.SpellCard import SpellCard
-
 from ex3.AggressiveStrategy import AggressiveStrategy
 from ex3.FantasyCardFactory import FantasyCardFactory
 from ex3.GameEngine import GameEngine
@@ -27,7 +23,9 @@ def main() -> None:
 
         print("\nSimulating aggressive turn...")
         result = engine.simulate_turn()
-        hand = ", ".join([f"{card.name} ({card.cost})" for card in engine.hand])
+        hand = ", ".join(
+            [f"{card.name} ({card.cost})" for card in engine.hand]
+        )
         print(f"Hand: [{hand}]")
 
         print("\nTurn execution:")
@@ -39,7 +37,10 @@ def main() -> None:
     except Exception as e:
         print(e)
 
-    print("\nAbstract Factory + Strategy Pattern: Maximum flexibility achieved!")
+    print(
+        "\nAbstract Factory + Strategy "
+        "Pattern: Maximum flexibility achieved!"
+        )
 
 
 if __name__ == "__main__":

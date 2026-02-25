@@ -1,11 +1,8 @@
 from ex0.Card import Card
 from ex0.CreatureCard import CreatureCard
-
 from ex1.ArtifactCard import ArtifactCard
 from ex1.SpellCard import SpellCard
-
 from ex3.CardFactory import CardFactory
-
 import random
 
 
@@ -192,15 +189,15 @@ class FantasyCardFactory(CardFactory):
                         creature["health"],
                     )
         if isinstance(name_or_power, int):
-            return CreatureCard("Custom Creature", 2, "Common", name_or_power, 1)
+            return CreatureCard("Custom Creature", 2, "Common",
+                                name_or_power, 1)
         creature = self._creatures[0]
         return CreatureCard(
             creature["name"],
             creature["cost"],
             creature["rarity"],
-            creature["attack"],
-            creature["health"],
-        )
+            creature["attack"], creature["health"]
+            )
 
     def create_spell(self, name_or_power: str | int | None = None) -> Card:
         if isinstance(name_or_power, str):
@@ -215,9 +212,8 @@ class FantasyCardFactory(CardFactory):
         if isinstance(name_or_power, int):
             return SpellCard("Custom Spell", name_or_power, "Common", "damage")
         spell = self._spells[0]
-        return SpellCard(
-            spell["name"], spell["cost"], spell["rarity"], spell["effect_type"]
-        )
+        return SpellCard(spell["name"], spell["cost"], spell["rarity"],
+                         spell["effect_type"])
 
     def create_artifact(self, name_or_power: str | int | None = None) -> Card:
         if isinstance(name_or_power, str):
@@ -243,18 +239,16 @@ class FantasyCardFactory(CardFactory):
             artifact["name"],
             artifact["cost"],
             artifact["rarity"],
-            artifact["durability"],
-            artifact["effect"],
-        )
+            artifact["durability"], artifact["effect"]
+            )
 
     def create_themed_deck(self, size: int) -> dict:
-
         if not isinstance(size, int) or size <= 0:
             raise Exception(
-                "[LOGIC ERROR]: The size argument must be a positive non-zero integer"
+                "[LOGIC ERROR]: The size argument must "
+                "be a positive non-zero integer"
             )
         deck = {"creatures": [], "spells": [], "artifacts": []}
-
         for _ in range(size):
             card_type = random.choice(["creature", "spell", "artifact"])
             if card_type == "creature":
@@ -263,7 +257,6 @@ class FantasyCardFactory(CardFactory):
                 deck["spells"].append(self.create_spell())
             else:
                 deck["artifacts"].append(self.create_artifact())
-
         deck["size"] = size
         return deck
 
